@@ -47,13 +47,18 @@ function App() {
 
 	const findUserBills = async (userId) => {
 		const bills = await UserService.getBills(userId, { limit: 4, order: ['date ASC'] });
-		for(var i=0; i < bills.data.length; i++){
-			if(bills.data[i].isDue === true){
+		const today = moment(new Date()).endOf('day').valueOf()
+		const myBills = bills.data.filter(b => {
+			console.log(moment(b.created).valueOf() < today);
+			return moment(b.created).valueOf() < today;
+		});
+		for(var i=0; i < myBills; i++){
+			if(myBills[i].isDue === true){
 				setIsDue(true)
 				break
 			}
 		}
-		setBills(bills.data);
+		setBills(myBills);
 	};
 
 	const findUserClasses = async (userId) => {
@@ -74,7 +79,7 @@ function App() {
 	useEffect(() => {
 		if (codebar) {
 			findUser(codebar);
-		};
+		}
 	}, [codebar]);
 
 	return (
@@ -106,6 +111,8 @@ function App() {
 					</div>
 					<div style={{ marginRight: 20 }}> { isDue ? '🔴' : '🟢'}</div>
 				</div>
+				<div style={{ marginRight: 20 }}> { !user?.paseSanitario ? '🔴 Falta pase sanitario' : '🟢 Tiene pase sanitario'}</div>
+
 				{
 					bills.length ? (
 						<>
