@@ -111,7 +111,7 @@ function App() {
 					</div>
 					<div style={{ marginRight: 20 }}> { isDue ? '🔴' : '🟢'}</div>
 				</div>
-				<div style={{ marginRight: 20 }}> { !user?.paseSanitario ? '🔴 Falta pase sanitario' : '🟢 Tiene pase sanitario'}</div>
+				{user && <div style={{ marginRight: 20 }}> { !user?.paseSanitario ? '🔴 Falta pase sanitario' : '🟢 Tiene pase sanitario'}</div>}
 
 				{
 					bills.length ? (
