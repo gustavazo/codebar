@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import UserService from "./services/UserService";
 import useCodebarScanner from "./hooks/useCodebar";
 import moment from "moment";
@@ -17,6 +17,40 @@ function App() {
   const [loader, setLoader] = useState(false);
   const codebar = useCodebarScanner();
   const [isDue, setIsDue] = useState(false);
+  const [myText, setMyText] = useState("");
+  const myRef = useRef();
+
+  const findUser2 = async (userCode) => {
+    setLoader(true);
+    const user = await UserService.find({
+      where: {
+        dni: userCode,
+      },
+    });
+
+    if (user.data[0]) {
+      setUser(user.data[0]);
+      findUserBills(user.data[0].id);
+      findUserClasses(user.data[0].id);
+      findUserLastPlan(user.data[0].id);
+      createEntrance(user.data[0].id);
+      setMessage(null);
+    } else {
+      setUser(null);
+      setBills([]);
+      setClasses([]);
+      setPlan(null);
+      setMessage("Usuario no encontrado");
+    }
+    setLoader(false);
+    setTimeout(function() {
+      setUser(null);
+      setBills([]);
+      setClasses([]);
+      setPlan(null);
+      myRef.current.focus();
+    }, 10000)
+  };
 
   const findUser = async (userCode) => {
     userCode = userCode.substring(1);
@@ -85,11 +119,21 @@ function App() {
     });
   };
 
+  const handleSabe = (e) => {
+    if (e.target.value.length === 8) {
+      findUser2(e.target.value)
+    }
+  }
+
   useEffect(() => {
     if (codebar) {
       findUser(codebar);
     }
   }, [codebar]);
+
+  useEffect(() => {
+    myRef.current.focus();
+  }, []);
 
   return (
     <div className="App">
@@ -154,7 +198,9 @@ function App() {
                 </h3>
               </div>
             ) : (
-              <p>Por favor, deslice la tarjeta</p>
+              <div>
+                <p>Por favor, deslice la tarjeta</p>
+              </div>
             )}
             {plan && (
               <>
@@ -187,7 +233,12 @@ function App() {
               : "🟢 Tiene pase sanitario"}
           </div>
         )}
-
+        {
+          !user && <div>
+            <p>O ingrese su DNI</p>
+            <input style={{height: 30, fontSize: 15}} type="text" ref={myRef} onChange={handleSabe}></input>
+          </div>
+        }
         {bills.length ? (
           <>
             <h4
