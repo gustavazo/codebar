@@ -49,7 +49,7 @@ function App() {
       setClasses([]);
       setPlan(null);
       myRef.current.focus();
-    }, 10000)
+    }, 5000)
   };
 
   const findUser = async (userCode) => {
