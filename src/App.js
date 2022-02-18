@@ -77,6 +77,13 @@ function App() {
       setMessage("Usuario no encontrado");
     }
     setLoader(false);
+    setTimeout(function() {
+      setUser(null);
+      setBills([]);
+      setClasses([]);
+      setPlan(null);
+      myRef.current.focus();
+    }, 5000)
   };
 
   const findUserBills = async (userId) => {
