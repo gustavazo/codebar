@@ -89,7 +89,7 @@ function App() {
   const findUserBills = async (userId) => {
     const bills = await UserService.getBills(userId, {
       limit: 4,
-      order: ["date ASC"],
+      order: ["date DESC"],
       where: { disabled: false },
     });
     const today = moment(new Date()).endOf("day").valueOf();
