@@ -18,6 +18,7 @@ function App() {
   const codebar = useCodebarScanner();
   const [isDue, setIsDue] = useState(false);
   const [myText, setMyText] = useState("");
+  const [order,setOrder] = useState([])
   const myRef = useRef();
 
   const findUser2 = async (userCode) => {
@@ -27,13 +28,13 @@ function App() {
         dni: userCode,
       },
     });
-
+    console.log(user,'que llega', user.data[0].type)
     if (user.data[0]) {
       setUser(user.data[0]);
       findUserBills(user.data[0].id);
       findUserClasses(user.data[0].id);
       findUserLastPlan(user.data[0].id);
-      createEntrance(user.data[0].id);
+      createEntrance(user.data[0].id /*, user.data[0].type, user.data[0] */);
       setMessage(null);
     } else {
       setUser(null);
@@ -67,7 +68,7 @@ function App() {
       findUserBills(user.data[0].id);
       findUserClasses(user.data[0].id);
       findUserLastPlan(user.data[0].id);
-      createEntrance(user.data[0].id);
+      createEntrance(user.data[0].id /*, user.data[0].type */ );
       setMessage(null);
     } else {
       setUser(null);
@@ -88,8 +89,7 @@ function App() {
 
   const findUserBills = async (userId) => {
     const bills = await UserService.getBills(userId, {
-      limit: 4,
-      order: ["date DESC"],
+      order: ["created DESC"],
       where: { disabled: false },
     });
     const today = moment(new Date()).endOf("day").valueOf();
@@ -119,10 +119,12 @@ function App() {
     setPlan(lastPlan.data[lastPlan.data.length - 1]);
   };
 
-  const createEntrance = (userId) => {
+  const createEntrance = (userId /*, type, name*/) => {
     EntranceService.create({
       userId,
       start: moment(new Date()).subtract(3, "hours").toISOString(),
+      // userType: type === '' ? "0" : type,
+      // fullName: name.firstName + ' ' + name.lastName
     });
   };
 
