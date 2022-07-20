@@ -107,11 +107,20 @@ function App() {
   };
 
   const findUserClasses = async (userId) => {
-    const classes = await UserService.getClasses(userId);
+    let begining = moment('0:00am', 'h:mma').toISOString();
+    let end = moment(begining).add(1, 'days').toISOString();
+    const classes = await UserService.getClasses(userId, {
+      where: {
+        date: {
+          between:[begining, end]
+        }
+      }
+    });
     const filterClasses = classes.data.filter(
-      (classe) => classe.date > new Date().toISOString()
+      (classe) => classe.date < end || classe.date > begining
     );
-    setClasses(filterClasses);
+    setClasses(classes.data);
+    console.log(filterClasses)
   };
 
   const findUserLastPlan = async (userId) => {
@@ -320,8 +329,8 @@ function App() {
               }}
             >
               {classes.map((c) => (
+                
                 <div>
-                  {c.date < new Date().toISOString ? (
                     <>
                       <h4>{c.name}</h4>
                       <h5>
@@ -333,7 +342,6 @@ function App() {
                           " hs"}
                       </h5>
                     </>
-                  ) : null}
                 </div>
               ))}
             </div>
