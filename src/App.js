@@ -49,6 +49,7 @@ function App() {
       setBills([]);
       setClasses([]);
       setPlan(null);
+      setIsDue(false)
       myRef.current.focus();
     }, 5000)
   };
@@ -103,7 +104,14 @@ function App() {
         break;
       }
     }
-    setBills(myBills);
+    console.log(myBills,'que mierdaaa')
+    const lastBill = myBills[0]?.dueOn
+    const days = moment.duration(moment().diff(lastBill)).asDays();
+    if(days > 30) {
+      console.log(days)
+      setIsDue(true);
+    }
+     setBills(myBills);
   };
 
   const findUserClasses = async (userId) => {
