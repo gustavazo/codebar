@@ -28,7 +28,7 @@ function App() {
         dni: userCode,
       },
     });
-    console.log(user,'que llega', user.data[0].type)
+    // console.log(user,'que llega', user.data[0].type)
     if (user.data[0]) {
       setUser(user.data[0]);
       findUserBills(user.data[0].id);
@@ -95,16 +95,18 @@ function App() {
     });
     const today = moment(new Date()).endOf("day").valueOf();
     const myBills = bills.data.filter((b) => {
-      console.log(moment(b.created).valueOf() < today);
+      console.log(moment(b.created).valueOf() < today,'esto e');
       return moment(b.created).valueOf() < today;
     });
-    for (var i = 0; i < myBills; i++) {
+    for (var i = 0; i < myBills.length; i++) {
+      console.log(myBills[i],'que mierdaaa')
       if (myBills[i].isDue === true) {
         setIsDue(true);
+        console.log('ando supuestamente')
         break;
       }
     }
-    console.log(myBills,'que mierdaaa')
+    // console.log(myBills,'que mierdaaa')
     const lastBill = myBills[0]?.dueOn
     const days = moment.duration(moment().diff(lastBill)).asDays();
     if(days > 30) {
@@ -128,7 +130,7 @@ function App() {
       (classe) => classe.date < end || classe.date > begining
     );
     setClasses(classes.data);
-    console.log(filterClasses)
+    // console.log(filterClasses)
   };
 
   const findUserLastPlan = async (userId) => {
