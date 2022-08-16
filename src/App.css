@@ -28,10 +28,48 @@
   color: #61dafb;
 }
 
+.customButton {
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  background-color: #552f4f;
+  color: white;
+  transition-duration: 0.4s;
+  box-shadow: 10;
+}
+
+.customButton:hover {
+  cursor: pointer;
+  background-color: #441B3E;
+}
+
+.customButton:active,
+.serialSelection:active {
+  opacity: .6;
+}
+.serialSelection:hover {
+  cursor: pointer;
+}
+
+.logoPulso:hover {
+  transition-duration: 200ms;
+  cursor: pointer;
+  transform: translateY(-1px) translateX(2px);
+}
+
+.serialSelection {
+  background-color: rgba(255, 255, 255, 0.123);
+  padding: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
