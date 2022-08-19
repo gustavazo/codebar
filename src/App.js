@@ -111,14 +111,11 @@ function App() {
       return moment(b.created).valueOf() < today;
     });
     for (var i = 0; i < myBills.length; i++) {
-      console.log(myBills[i],'que mierdaaa')
       if (myBills[i].isDue === true) {
         setIsDue(true);
-        console.log('ando supuestamente')
         break;
       }
     }
-    // console.log(myBills,'que mierdaaa')
     const lastBill = myBills[0]?.dueOn
     const days = moment.duration(moment().diff(lastBill)).asDays();
     if(days > 30) {
