@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/icons-material": "^5.10.3",
+    "@mui/material": "^5.10.4",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -16,6 +20,7 @@
     "react-scripts": "4.0.3",
     "react-toastify": "^8.1.0",
     "simple-react-modal": "^0.5.1",
+    "socket.io-client": "^4.5.1",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

@@ -59,6 +59,7 @@ export class MySerial {
             if (!this.port) {
                 await portLocal.open({ baudRate: 9600 });
                 this.port = portLocal;
+                console.log('Puerto abierto')
             }
         }
         catch (err) {
@@ -98,8 +99,11 @@ export class MySerial {
                 while (true) {
                     const { value, done } = await this.reader.read();//Esto aguarda la recepción del dato hasta que no exista el dato no devuelve la promesa
                     this.id += value.toString();
+                    console.log('reading...',value)
                     if (value.toString().startsWith("166")) {
+                        console.log('setTimeOut!')
                         setTimeout(() => {
+                            console.log('timeOut finish!!',this.id)
                             this.id = this.id.replaceAll(",", "");
                             this.listenerCallback(this.id);
                             this.id = "";

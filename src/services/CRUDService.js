@@ -1,10 +1,10 @@
 import axios from 'axios';
-import conf from '../conf';
+import config from '../config';
 
 class CRUDService {
     constructor(model) {
         this.api = axios.create();
-        this.api.defaults.baseURL = `${conf.API_URL}/${model}`;
+        this.api.defaults.baseURL = `${config.backendUrl}/${model}`;
     }
 
     async find(filter = {}) {

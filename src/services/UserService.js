@@ -1,5 +1,5 @@
 import CRUDService from './CRUDService';
-import conf from '../conf';
+import conf from '../config';
 
 class UserService extends CRUDService {
     constructor() {
