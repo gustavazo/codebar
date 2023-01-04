@@ -31,7 +31,7 @@ function LastEntrancesTable({ lastEntrances, containerStyle = {} }) {
                             {lastEntrances?.map((e, index) => {
                                 const fulldate = e.end ? e.end : e.start;
                                 const date = moment(fulldate).format('DD/MM/YYYY');
-                                const time = moment(fulldate).add(3, 'hours').format('hh:mm');
+                                const time = moment(fulldate).add(3, 'hours').format('HH:mm');
                                 const registerType = e.end ? 'Salida' : 'Entrada';
                                 return (
                                     <TableRow>

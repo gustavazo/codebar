@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 
-const CODEBAR_NUMBER_THRESHOLD = 6;
+const CODEBAR_NUMBER_THRESHOLD = 10;
 let i = 0;
 
 const useCodebarScanner = () => {
@@ -14,7 +14,8 @@ const useCodebarScanner = () => {
     }, []);
 
     const productAdded = (e) => {
-        if (Number(e.key) !== NaN) {
+        console.log('key', e.key);
+        if (Number(e.key) !== NaN && e.key !== 'Backspace') {
             const currentLength = keyboardInput.current.length;
             keyboardInput.current += e.key;
 
@@ -25,7 +26,7 @@ const useCodebarScanner = () => {
 
                 if ((keyboardInput.current.length - currentLength >= CODEBAR_NUMBER_THRESHOLD) && !productCodebar) {
                     const productCodebarId = keyboardInput.current.match(/\d+/);
-
+                    console.log('keyboardInput', keyboardInput.current, 'currentLenght', currentLength)
                     if (productCodebarId) {
                         setProductCodebar(i + productCodebarId);
                         keyboardInput.current = "";
@@ -42,7 +43,7 @@ const useCodebarScanner = () => {
             }, 1000);
         }
     };
-    
+
     return productCodebar;
 };
 

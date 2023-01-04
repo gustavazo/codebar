@@ -1,8 +1,5 @@
-//EL CODE BAR INTRODUCE ERROR CUANDO SE INGRESA EL DNI - ESPERA 6 CARACTERES DENTRO DEL SEGUNDO. A VECES SE EJECUTA CUANDO SE INGRESA RAPIDO O CUANDO QUEDAN GUARDADOS CARACTERES EN EL CODEBAR
 //Ultimos ingresos: Hay que ver que hacer cuando existe un registro con entrada en ultimos ingresos y se realiza la salida. Como es un mismo registro se pisa
-//Hay que ver el mensaje de factura vencida. Deberia traerse la factura con la que se trabaja para identificar la condicion del usuario y mostrarla.
-//actualmente se muestra la current o si no hay current la ultima. Pero puede existir una current no paga y con la que se valida es con la ultima que est[a paga. 
-//hay que unificar ese criterio.
+
 import "./App.css";
 import { useState, useEffect, useRef } from "react";
 import UserService from "./services/UserService";
@@ -95,9 +92,7 @@ function App() {
       const newEntrance = createEntrance(user.data[0]/*, user.data[0].type, user.data[0] */);
       Promise.all([bills, classes, lastPlan, newEntrance]).then((values) => {
         const bills_ = values[0];
-        console.log('Bill get handleBillsToShow')
         handleBillsToshow(bills_)
-        console.log('Bill get getUserCondition')
         setUserCondition(getUserCondition(bills_))
         setClasses(values[1]);
         setPlan(values[2]);

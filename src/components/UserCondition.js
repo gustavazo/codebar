@@ -10,7 +10,7 @@ function UserCondition({ userCondition, }) {
         conditionStyle(userCondition) {
             if (userCondition.active) return { color: 'green' }
             if (userCondition.defaulter) return { color: '#FFA500' }
-            if (userCondition.inactive) return { color: 'red' }
+            if (userCondition.inactivez) return { color: 'red' }
         }
     }
     function getMessage(userCondition) {
